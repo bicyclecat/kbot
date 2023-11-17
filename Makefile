@@ -21,11 +21,11 @@ build: format get-dependencies
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/bicyclecat/kbot/cmd.appVersion=${VERSION}
 
 image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH}
+	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS} --build-arg TARGETOS=${TARGETOS}
 
 push:
-	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}
 
 clean:
 	rm -rf kbot
-	docker rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}
