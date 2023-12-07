@@ -6,6 +6,7 @@ image:
   registry: "docker.io"
   repository: "bicyclecat"
   tag: "1.0.3-cf817cf"
+  os: linux
   arch: amd64
 secret:
   env: "TELE_TOKEN"
