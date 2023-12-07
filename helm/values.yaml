@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   registry: "ghcr.io"
   repository: "bicyclecat/kbot"
-  tag: "1.0.5-f7786e9"
+  tag: "v1.0.6-749006f"
   os: linux
   arch: amd64
 secret:
