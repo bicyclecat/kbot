@@ -1,5 +1,5 @@
 APP:=$(shell basename -s .git $(shell git remote get-url origin))
-REGISTRY=docker.io
+REGISTRY=ghcr.io
 REPOSITORY=bicyclecat
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 

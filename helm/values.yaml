@@ -4,7 +4,7 @@
 # Dummy comment added
 replicaCount: 1
 image:
-  registry: "docker.io"
+  registry: "ghcr.io"
   repository: "bicyclecat"
   tag: "1.0.5-4bf8259"
   os: linux
