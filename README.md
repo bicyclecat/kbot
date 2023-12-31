@@ -20,17 +20,21 @@ The Kbot Telegram bot consists of two main components:
 
 ### Prerequisites
 
-**Mandatory:**
 - Golang installed
 - Telegram Bot token (obtained on Telegram Bot creation stage)
-
-**Optional:**
-- Make installed
-- Docker installed
+- Make installed (optional)*
 
 ### Golang installation
 
 If Golang is not installed in your OS, you can follow [Golang installation guide](https://go.dev/doc/install)
+
+### *Make installation
+
+In Debian-like Linux like Ubuntu, run:
+```bash
+sudo apt install build-essential
+```
+Additional documentation can be found at the [GNU Make Webpage](https://www.gnu.org/software/make/)
 
 ### Telegram Bot creation
 
@@ -85,3 +89,34 @@ Now you can enter commands, like:
 "/name" - Returns bot's name
 
 "/time" - Returns current time
+
+## Containerized launch
+
+Another way of running Kbot Telegram bot is inside the Docker container by direct "docker run" or within a Kubernetes cluster. 
+
+Prerequisites:
+
+Mandatory:
+- Make installed (see installation guide above)
+- Docker installed
+
+Optional:
+- Kubernetes cluster
+
+### Docker installation
+
+If Docker is not installed in your system, please follow the [Doceker Installation Guide](https://www.docker.com/get-started/)
+
+### Docker Image creation
+
+Kbot app can be packed into a docker image for running on specific OS and/or Architecture by running command like in example below:
+```bash
+make image TARGETOS="linux" TARGETARCH="amd64"
+```
+
+Then you can push your image to a container registry (docker hub in our case):
+```bash
+make push TARGETOS="linux" TARGETARCH="amd64"
+```
+
+Now the image can be launched in container directly with "docker run", or it can be a part of deployment in Kubernetes cluster.
