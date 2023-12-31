@@ -1,45 +1,87 @@
-# kbot
+# Kbot
 
-Project description.
+## Intro
 
-Simple Telegram chatbot written with Golang
+A simple multi-purpose Telegram chatbot.
 
+## Project Structure
 
-Bot URL: t.me/bicyclecat_bot
+The Kbot Telegram bot consists of two main components:
 
+**Telegram Bot:**
+   - Serves as the frontend for interacting with users on Telegram.
+   - Created using BotFather Telegram bot.
 
-Preparations.
+**Golang Backend:**
+   - Responsible for handling requests and the bot's behavior.
+   - Compiled from Golang source files into an executable for specified architecture.
+
+## Quick start guide
+
+### Prerequisites
+
+**Mandatory:**
+- Golang installed
+- Telegram Bot token (obtained on Telegram Bot creation stage)
+
+**Optional:**
+- Make installed
+- Docker installed
+
+### Golang installation
+
+If Golang is not installed in your OS, you can follow [Golang installation guide](https://go.dev/doc/install)
+
+### Telegram Bot creation
 
 To create a Telegram bot, follow these instructions:
+- Open Telegram app and enter "BotFather" in the searchbar
+- Start chat with BotFather and enter "/start"
+- Click "/newbot" link and follow instructions
+- After bot is created, click "/mybots" link in BotFather chat
+- Find and click your bot's button, then click "API Token"
+- Copy and save the API Token when it appears
 
-1. Open Telegram App and enter "botfather" in the searchbar.
-2. Among the search results, bot named BotFather shall appear. Click on it's title to open the chat.
-3. Inside the chat with BotFather bot, enter "/start".
-4. When list of instructions appears, Click "/newbot" link, or type "/newbot" manually and press "Enter".
-5. Choose a name for your bot.
-6. Choose a username for your bot. It must end with "_bot".
-7. When "Done" message appears, copy your bot's access token and save it to a safe place.
-8. 
-
-9. Navigate to the folder containing your bot's executable binary, r.g. "kbot" and run it, e.g.:
-
-./ kbot start
+### Clone git repository
 
 
-Usage:
 
-In order to use your new bot, follow these instructions:
+### Backend application build
 
-1. Ensure you have set TELE_TOKEN environment variable and assigned your bot token's value into it, for example:
+From your project's root directory, run the following commands:
 
-Copy your bot's access token to the clipboard, then run:
+Satisfy possible dependencies:
+```bash
+go get
+```
 
+Build kbot executable:
+```bash
+go build
+```
+
+### Start bot
+
+In order for Kbot to be able to cooperate with it's Telegram frontend, the TELE_TOKEN environment variable needs to be exported. This can be done similar to the following example (value is random):
+
+Copy your API Token to Clipboard, then safely read TELE_TOKEN env variable by running the following command:
+```bash
 read -s TELE_TOKEN
+```
+and press \<Ctri-V>, then \<Enter>
 
-and press <Ctrl-V><Enter>
 
-2. Open Telegramm app and enter your bot's name in the searchbar.
+Now you can start the kbot:
+```bash
+./kbot start
+```
 
-3. Among the search results, a line with your bot must appear. Click on it to open the chat.
+### Usage:
 
-4. Now, you can start chatting with your bot by clicking "Start" and following instructions.
+To start using your Telegram bot, open the Telegram app and search for your bot's name, then click it to open chat window and enter "/start".
+
+Now you can enter commands, like:
+
+"/name" - Returns bot's name
+
+"/time" - Returns current time
