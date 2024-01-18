@@ -49,3 +49,5 @@ spec:
               secretKeyRef:
                 key: {{ .Values.secret.key }}
                 name: {{ .Values.secret.name }}
+          - name: METRICS_HOST
+            value: {{ .Values.env.metricsHost | quote }}
