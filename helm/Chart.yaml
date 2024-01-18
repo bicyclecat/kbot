@@ -22,3 +22,33 @@ version: 1.0.4
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.0.5"
+
+dependencies:
+
+- name: cert-manager
+  version: 1.13.3
+  repository: "file://../otel/cert-manager"
+  
+- name: opentelemetry-operator
+  version: 0.45.2
+  repository: "file://../otel/opentelemetry-operator"
+
+- name: fluent-bit
+  version: 0.42.0
+  repository: "file://../otel/fluent-bit"
+
+- name: grafana
+  version: 7.2.1
+  repository: "file://../otel/grafana"
+
+- name: loki
+  version: 5.41.6
+  repository: "file://../otel/loki"
+
+- name: prometheus
+  version: 25.8.2
+  repository: "file://../otel/prometheus"
+
+- name: contour
+  version: 15.0.2
+  repository: "file://../otel/contour"

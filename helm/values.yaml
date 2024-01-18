@@ -15,3 +15,5 @@ secret:
   key: "token"
 securityContext:
   privileged: true
+env:
+  metricsHost: "otel-collector:4317"

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: demo
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+  - host: "www.somedevops.net"
+    http:
+      paths:
+      - path: /grafana/
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-grafana
+            port:
+              number: 3000
+  tls:
+  - hosts:
+    - www.somedevops.net
+    secretName: grafana-tls-secret
