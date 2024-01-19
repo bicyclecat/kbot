@@ -307,7 +307,7 @@ contour:
   ## @param contour.livenessProbe.successThreshold Minimum consecutive successes for the probe to be considered successful after having failed.
   ##
   livenessProbe:
-    enabled: false
+    enabled: true
     initialDelaySeconds: 120
     periodSeconds: 20
     timeoutSeconds: 5
@@ -321,7 +321,7 @@ contour:
   ## @param contour.readinessProbe.successThreshold Minimum consecutive successes for the probe to be considered successful after having failed.
   ##
   readinessProbe:
-    enabled: false
+    enabled: true
     initialDelaySeconds: 15
     periodSeconds: 10
     timeoutSeconds: 5

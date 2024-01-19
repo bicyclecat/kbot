@@ -222,19 +222,20 @@ ingressShim: {}
   # defaultIssuerKind: ""
   # defaultIssuerGroup: ""
 
-prometheus:
-  enabled: true
-  servicemonitor:
-    enabled: false
-    prometheusInstance: default
-    targetPort: 9402
-    path: /metrics
-    interval: 60s
-    scrapeTimeout: 30s
-    labels: {}
-    annotations: {}
-    honorLabels: false
-    endpointAdditionalProperties: {}
+# CUSTOM
+#prometheus:
+#  enabled: true
+#  servicemonitor:
+#    enabled: false
+#    prometheusInstance: default
+#    targetPort: 9402
+#    path: /metrics
+#    interval: 60s
+#    scrapeTimeout: 30s
+#    labels: {}
+#    annotations: {}
+#    honorLabels: false
+#    endpointAdditionalProperties: {}
 
 # Use these variables to configure the HTTP_PROXY environment variables
 # http_proxy: "http://proxy:8080"
@@ -284,7 +285,7 @@ topologySpreadConstraints: []
 # controller-manager. See:
 # https://github.com/kubernetes/kubernetes/blob/806b30170c61a38fedd54cc9ede4cd6275a1ad3b/cmd/kubeadm/app/util/staticpod/utils.go#L241-L245
 livenessProbe:
-  enabled: false
+  enabled: true
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 15
@@ -383,23 +384,26 @@ webhook:
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   
-  #livenessProbe:
-  #  # CUSTOM
-  #  enabled: false
-  #  failureThreshold: 3
-  #  initialDelaySeconds: 60
-  #  periodSeconds: 10
-  #  successThreshold: 1
-  #  timeoutSeconds: 1
+  livenessProbe:
   
-  #readinessProbe:
-  #  # CUSTOM
-  #  enabled: false
-  #  failureThreshold: 3
-  #  initialDelaySeconds: 5
-  #  periodSeconds: 5
-  #  successThreshold: 1
-  # timeoutSeconds: 1
+    enabled: true
+    failureThreshold: 3
+    #Increased to 80
+    initialDelaySeconds: 80
+    periodSeconds: 10
+    successThreshold: 1
+    # Increased from 1 to 5
+    timeoutSeconds: 5
+  
+  readinessProbe:
+  
+    enabled: true
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    successThreshold: 1
+    # Increased from 1 to 5
+    timeoutSeconds: 5
 
   nodeSelector:
     kubernetes.io/os: linux
