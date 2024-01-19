@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   registry: "docker.io"
   repository: "bicyclecat"
-  tag: "v1.0.7-3d09aad"
+  tag: "v1.0.7-a18d4b0"
   os: linux
   arch: amd64
 podAnnotations:
