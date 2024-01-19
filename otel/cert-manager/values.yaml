@@ -223,19 +223,19 @@ ingressShim: {}
   # defaultIssuerGroup: ""
 
 # CUSTOM
-#prometheus:
-#  enabled: true
-#  servicemonitor:
-#    enabled: false
-#    prometheusInstance: default
-#    targetPort: 9402
-#    path: /metrics
-#    interval: 60s
-#    scrapeTimeout: 30s
-#    labels: {}
-#    annotations: {}
-#    honorLabels: false
-#    endpointAdditionalProperties: {}
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: false
+    prometheusInstance: default
+    targetPort: 9090
+    path: /metrics
+    interval: 60s
+    scrapeTimeout: 30s
+    labels: {}
+    annotations: {}
+    honorLabels: false
+    endpointAdditionalProperties: {}
 
 # Use these variables to configure the HTTP_PROXY environment variables
 # http_proxy: "http://proxy:8080"
