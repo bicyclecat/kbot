@@ -70,18 +70,20 @@ podDisruptionBudget: {}
 deploymentStrategy:
   type: RollingUpdate
 
-readinessProbe:
-  httpGet:
-    path: /api/health
-    port: 3000
+readinessProbe: {}
+#readinessProbe:
+#  httpGet:
+#    path: /api/health
+#    port: 3000
 
-livenessProbe:
-  httpGet:
-    path: /api/health
-    port: 3000
-  initialDelaySeconds: 60
-  timeoutSeconds: 30
-  failureThreshold: 10
+livenessProbe: {}
+#livenessProbe:
+#  httpGet:
+#    path: /api/health
+#    port: 3000
+#  initialDelaySeconds: 60
+#  timeoutSeconds: 30
+#  failureThreshold: 10
 
 ## Use an alternate scheduler, e.g. "stork".
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
