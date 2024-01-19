@@ -41,17 +41,17 @@ dependencies:
   version: 7.2.1
   repository: "file://../otel/grafana"
 
-#- name: prometheus
-#  version: 25.8.2
-#  repository: "file://../otel/prometheus"
+- name: prometheus
+  version: 25.8.2
+  repository: "file://../otel/prometheus"
 
-#- name: fluent-bit
-#  version: 0.42.0
-#  repository: "file://../otel/fluent-bit"
+- name: fluent-bit
+  version: 0.42.0
+  repository: "file://../otel/fluent-bit"
 
-#- name: loki
-#  version: 5.41.6
-#  repository: "file://../otel/loki"
+- name: loki
+  version: 5.41.6
+  repository: "file://../otel/loki"
 
 
 
