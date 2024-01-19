@@ -382,22 +382,24 @@ webhook:
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
-  livenessProbe:
-    # CUSTOM
-    enabled: false
-    failureThreshold: 3
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 1
-  readinessProbe:
-    # CUSTOM
-    enabled: false
-    failureThreshold: 3
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    successThreshold: 1
-    timeoutSeconds: 1
+  
+  #livenessProbe:
+  #  # CUSTOM
+  #  enabled: false
+  #  failureThreshold: 3
+  #  initialDelaySeconds: 60
+  #  periodSeconds: 10
+  #  successThreshold: 1
+  #  timeoutSeconds: 1
+  
+  #readinessProbe:
+  #  # CUSTOM
+  #  enabled: false
+  #  failureThreshold: 3
+  #  initialDelaySeconds: 5
+  #  periodSeconds: 5
+  #  successThreshold: 1
+  # timeoutSeconds: 1
 
   nodeSelector:
     kubernetes.io/os: linux
