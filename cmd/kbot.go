@@ -1,5 +1,5 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 NAME HERE den.vasyliev@gmail.com
 */
 package cmd
 
@@ -67,8 +67,6 @@ func pmetrics(ctx context.Context, payload string) {
 
 	// Add a value of 1 to the Int64Counter
 	counter.Add(ctx, 1)
-
-	fmt.Printf("Sent metric for payload: %s\n", payload)
 }
 
 // kbotCmd represents the kbot command
@@ -83,8 +81,6 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("kbot is started", appVersion)
-
 		logger := zerodriver.NewProductionLogger()
 
 		kbot, err := telebot.NewBot(telebot.Settings{
@@ -118,18 +114,8 @@ to quickly create a Cobra application.`,
 			pmetrics(context.Background(), payload)
 
 			switch payload {
-			case "/start":
-				// err = m.Send(fmt.Sprintf("Hello I'm Kbot %s! You can enter commands now :)", appVersion))
-				err = m.Send(fmt.Sprintf(`Hello, I'm Kbot %s! You can enter commands now :)
-Current command set:
-"name": displays bot's name
-"time": displays current time`, appVersion))
-
 			case "hello":
 				err = m.Send(fmt.Sprintf("Hello I'm Kbot %s!", appVersion))
-
-			case "name":
-				err = m.Send(fmt.Sprintf("My name is Kbot %s!", appVersion))
 
 			case "time":
 				// Get current time and date
@@ -156,7 +142,6 @@ Current command set:
 		})
 
 		kbot.Start()
-
 	},
 }
 
@@ -174,4 +159,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// kbotCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	// Initialize OpenTelemetry tracer
+
 }
