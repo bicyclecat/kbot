@@ -4,7 +4,7 @@ metadata:
   name: grafana-ingress
   namespace: demo
   annotations:
-    cert-manager.io/cluster-issuer: kbot-letsencrypt-prod
+    cert-manager.io/cluster-issuer: kbot-letsencrypt-stage
     ingress.kubernetes.io/force-ssl-redirect: "true"
     kubernetes.io/ingress.class: contour
     kubernetes.io/tls-acme: "true"
