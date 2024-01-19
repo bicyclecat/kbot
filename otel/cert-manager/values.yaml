@@ -305,8 +305,8 @@ webhook:
   # An APIVersion and Kind must be specified in your values.yaml file.
   # Flags will override options that are set here.
   config:
-    # apiVersion: webhook.config.cert-manager.io/v1alpha1
-    # kind: WebhookConfiguration
+    apiVersion: webhook.config.cert-manager.io/v1alpha1
+    kind: WebhookConfiguration
 
     # The port that the webhook should listen on for requests.
     # In GKE private clusters, by default kubernetes apiservers are allowed to
@@ -383,12 +383,16 @@ webhook:
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   livenessProbe:
+    # CUSTOM
+    enabled: false
     failureThreshold: 3
     initialDelaySeconds: 60
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 1
   readinessProbe:
+    # CUSTOM
+    enabled: false
     failureThreshold: 3
     initialDelaySeconds: 5
     periodSeconds: 5
