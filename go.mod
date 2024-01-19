@@ -2,7 +2,10 @@ module kbot
 
 go 1.21
 
-require github.com/bicyclecat/kbot v1.0.6
+require (
+	github.com/bicyclecat/kbot v1.0.6
+	github.com/spf13/cobra v1.8.0
+)
 
 require (
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
@@ -28,9 +31,8 @@ require (
 require (
 	github.com/hirosassa/zerodriver v0.1.4
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/spf13/cobra v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.opentelemetry.io/otel v1.22.0
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v0.45.0
-	gopkg.in/telebot.v3 v3.1.4 // indirect
+	gopkg.in/telebot.v3 v3.2.1
 )
