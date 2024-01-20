@@ -12,7 +12,7 @@ image:
   # Set to "-" to not use the default value
   tag:
   digest:
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 testFramework:
   enabled: true
@@ -90,7 +90,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 2020
+  port: 3001
   loadBalancerClass:
   loadBalancerSourceRanges: []
   labels: {}
@@ -380,11 +380,12 @@ config:
   inputs: |
     [INPUT]
         Name   tail
-        Path   /var/log/kbot.log   # Замените путь на фактический путь к лог-файлу
-        Parser docker
-        Refresh_Interval 30
-        Ignore_Older 6h
-        Tag kbot_logs
+        Path   /var/log/containers/*.log
+        multiline.parser docker, cri
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+        
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -396,35 +397,36 @@ config:
         K8S-Logging.Parser On
         K8S-Logging.Exclude On
 
+
+
   ## https://docs.fluentbit.io/manual/pipeline/outputs
+#       Match                source.docker.*
   outputs: |
     [OUTPUT]
-        Name es
-        Match kube.*
-        Host elasticsearch-master
-        Logstash_Format On
-        Retry_Limit False
-
-    [OUTPUT]
-        Name es
-        Match host.*
-        Host elasticsearch-master
-        Logstash_Format On
-        Logstash_Prefix node
-        Retry_Limit False
+        Name                 opentelemetry
+        Host                 otel-collector
+        Port                 3030
+        metrics_uri          /v1/metrics
+        logs_uri             /v1/logs
+        traces_uri           /v1/traces
+        Log_response_payload True
+        tls                  off
+        tls.verify           off
+        add_label            app fluent-bit
+        add_label            color blue
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
   upstream: {}
 
   ## https://docs.fluentbit.io/manual/pipeline/parsers
-  customParsers: |
-    [PARSER]
-        Name docker_no_time
-        Format json
-        Time_Keep Off
-        Time_Key time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L
+#  customParsers: |
+#    [PARSER]
+#        Name docker_no_time
+#        Format json
+#        Time_Keep Off
+#        Time_Key time
+#        Time_Format %Y-%m-%dT%H:%M:%S.%L
 
   # This allows adding more files with arbitary filenames to /fluent-bit/etc/conf by providing key/value pairs.
   # The key becomes the filename, the value becomes the file content.
