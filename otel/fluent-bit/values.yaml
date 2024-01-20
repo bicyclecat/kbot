@@ -383,19 +383,21 @@ config:
         Path   /var/log/containers/demo-kbot-*.log
         multiline.parser docker, cri
         Tag kube.*
-        Mem_Buf_Limit 5MB
-        Skip_Long_Lines On
+        Tag_Regex         (?<kube_namespace>[^_]+)_(?<kube_pod>[^_]+)_(?<kube_container>[^_]+)_(?<kube_id>[^_]+)_(?<kube_name>.*)\.(?<kube_format>log|log\.gz|txt|json|out)$
+        Ignore_Older      6h
+        Docker_Mode       On
+
         
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
     [FILTER]
-        Name kubernetes
-        Match kube.*
-        Merge_Log On
-        Keep_Log Off
-        K8S-Logging.Parser On
-        K8S-Logging.Exclude On
+        Name                 kubernetes
+        Match                kube.*
+        Merge_Log            On
+        Keep_Log             Off
+        K8S-Logging.Parser   On
+        K8S-Logging.Exclude  On
 
 
 
