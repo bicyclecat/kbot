@@ -619,7 +619,7 @@ datasources:
       access: proxy
       uid: prometheus
       orgId: 1
-      url: http://prometheus-server:9090
+      url: http://http://prometheus-server.monitoring.svc
       basicAuth: false
       isDefault: true
       version: 1
