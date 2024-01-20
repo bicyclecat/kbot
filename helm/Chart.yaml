@@ -23,31 +23,31 @@ version: v1.0.7
 # It is recommended to use it with quotes.
 appVersion: "1.0.5"
 
-dependencies:
+#dependencies:
 
-- name: cert-manager
-  version: 1.13.3
-  repository: "file://../otel/cert-manager"
+#- name: cert-manager
+#  version: 1.13.3
+#  repository: "file://../otel/cert-manager"
   
-- name: opentelemetry-operator
-  version: 0.45.2
-  repository: "file://../otel/opentelemetry-operator"
+#- name: opentelemetry-operator
+#  version: 0.45.2
+#  repository: "file://../otel/opentelemetry-operator"
 
-- name: contour
-  version: 15.0.2
-  repository: "file://../otel/contour"
+#- name: contour
+#  version: 15.0.2
+#  repository: "file://../otel/contour"
 
-- name: grafana
-  version: 7.2.1
-  repository: "file://../otel/grafana"
+#- name: grafana
+#  version: 7.2.1
+#  repository: "file://../otel/grafana"
 
-- name: prometheus
-  version: 25.8.2
-  repository: "file://../otel/prometheus"
+#- name: prometheus
+#  version: 25.8.2
+#  repository: "file://../otel/prometheus"
 
-- name: fluent-bit
-  version: 0.42.0
-  repository: "file://../otel/fluent-bit"
+#- name: fluent-bit
+#  version: 0.42.0
+#  repository: "file://../otel/fluent-bit"
 
 #- name: loki
 #  version: 5.41.6

@@ -10,8 +10,8 @@ image:
   tag: "v1.0.7-a18d4b0"
   os: linux
   arch: amd64
-podAnnotations:
-  sidecar.opentelemetry.io/inject: "true"
+#podAnnotations:
+#  sidecar.opentelemetry.io/inject: "true"
 secret:
   env: "TELE_TOKEN"
   name: "kbot"

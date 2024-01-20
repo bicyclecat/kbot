@@ -2,23 +2,22 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: otel
-  namespace: demo
+  namespace: monitoring
 spec:
-  mode: sidecar
+  mode: daemonset
   config: |
     receivers:
       otlp:
         protocols:
           grpc:
-            endpoint: localhost:4317
           http:
-            endpoint: 0.0.0.0:3030
+            endpoint: "0.0.0.0:3030"
     exporters:
       logging:
       loki:
-        endpoint: http://demo-loki:3100/loki/api/v1/push
+        endpoint: http://loki:3100/loki/api/v1/push
       prometheus:
-        endpoint: 0.0.0.0:8889
+        endpoint: "0.0.0.0:8889"
     service:
       pipelines:
         logs:
