@@ -380,7 +380,7 @@ config:
   inputs: |
     [INPUT]
         Name   tail
-        Path   /var/log/containers/*.log
+        Path   /var/log/containers/demo-kbot-*.log
         multiline.parser docker, cri
         Tag kube.*
         Mem_Buf_Limit 5MB
@@ -405,7 +405,7 @@ config:
     [OUTPUT]
         Name                 opentelemetry
         Host                 otel-collector
-        Port                 4318
+        Port                 3030
         metrics_uri          /v1/metrics
         logs_uri             /v1/logs
         traces_uri           /v1/traces
