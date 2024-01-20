@@ -462,9 +462,9 @@ admin:
 
 # env: {}
 env:
-#  GF_AUTH_ANONYMOUS_ENABLED: true
-#  GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-#  GF_AUTH_DISABLE_LOGIN_FORM: true
+  GF_AUTH_ANONYMOUS_ENABLED: "true"
+  GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+  GF_AUTH_DISABLE_LOGIN_FORM: "true"
   GF_FEATURE_TOGGLES_ENABLE: traceqlEditor
 
   
@@ -616,11 +616,12 @@ datasources:
     datasources:
     - name: Prometheus
       type: prometheus
+      access: proxy
       uid: prometheus
       orgId: 1
-      url: http://{{ .Release.Name }}-prometheus-server:9090
+      url: http://prometheus-server:9090
       basicAuth: false
-      isDefault: false
+      isDefault: true
       version: 1
       editable: true
       jsonData:
@@ -629,7 +630,7 @@ datasources:
       type: loki
       access: proxy 
       orgId: 1
-      url: http://{{ .Release.Name }}-loki:3100
+      url: http://loki:3100
       basicAuth: false
       isDefault: false
       version: 1
