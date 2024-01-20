@@ -17,10 +17,11 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: grafana.monitoring.svc
+            name: grafana
             port:
               number: 3000
   tls:
   - hosts:
     - www.somedevops.net
     secretName: grafana-tls-secret
+# Service name cannot be like grafana.monitoring.svc!
