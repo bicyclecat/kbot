@@ -12,7 +12,7 @@ spec:
           grpc:
             endpoint: localhost:4317
           http:
-            endpoint: 0.0.0.0:3030
+            endpoint: otel-collector:4318
     exporters:
       logging:
       loki:

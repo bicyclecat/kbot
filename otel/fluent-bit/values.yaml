@@ -405,7 +405,7 @@ config:
     [OUTPUT]
         Name                 opentelemetry
         Host                 otel-collector
-        Port                 3030
+        Port                 4318
         metrics_uri          /v1/metrics
         logs_uri             /v1/logs
         traces_uri           /v1/traces
