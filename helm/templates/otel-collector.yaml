@@ -10,7 +10,7 @@ spec:
       otlp:
         protocols:
           grpc:
-            endpoint: otel-collector:4317
+            endpoint: 10.120.9.89:4317
           http:
             endpoint: 0.0.0.0:3030
     exporters:
