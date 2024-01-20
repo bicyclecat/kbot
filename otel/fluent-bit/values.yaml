@@ -362,21 +362,29 @@ config:
         HTTP_Port {{ .Values.metricsPort }}
         Health_Check On
 
+#    [INPUT]
+#        Name tail
+#        Path /var/log/containers/*.log
+#        multiline.parser docker, cri
+#        Tag kube.*
+#        Mem_Buf_Limit 5MB
+#        Skip_Long_Lines On
+
+#    [INPUT]
+#        Name systemd
+#        Tag host.*
+#        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+#        Read_From_Tail On
+
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        Name tail
-        Path /var/log/containers/*.log
-        multiline.parser docker, cri
-        Tag kube.*
-        Mem_Buf_Limit 5MB
-        Skip_Long_Lines On
-
-    [INPUT]
-        Name systemd
-        Tag host.*
-        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
-        Read_From_Tail On
+        Name   tail
+        Path   /var/log/kbot.log   # Замените путь на фактический путь к лог-файлу
+        Parser docker
+        Refresh_Interval 30
+        Ignore_Older 6h
+        Tag kbot_logs
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
