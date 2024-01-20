@@ -19,4 +19,4 @@ secret:
 securityContext:
   privileged: true
 env:
-  metricsHost: "otel-collector:4317"
+  metricsHost: "localhost:4317"
