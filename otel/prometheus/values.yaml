@@ -750,15 +750,7 @@ serverFiles:
       - /etc/config/alerts
 
     scrape_configs:
-      - job_name: otel_collector
-        scrape_interval: 5s
-        static_configs:
-          - targets:
-            - otel-collector:8889
-      - job_name: prometheus
-        static_configs:
-          - targets:
-            - localhost:9090
+
 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
@@ -1169,7 +1161,19 @@ serverFiles:
 # adds additional scrape configs to prometheus.yml
 # must be a string so you have to add a | after extraScrapeConfigs:
 # example adds prometheus-blackbox-exporter scrape config
-extraScrapeConfigs: ""
+#extraScrapeConfigs: ""
+extraScrapeConfigs: |
+  - job_name: otel_collector
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - otel-collector:8889
+  - job_name: prometheus
+    static_configs:
+      - targets:
+        - localhost:9090
+
+
   # - job_name: 'prometheus-blackbox-exporter'
   #   metrics_path: /probe
   #   params:
