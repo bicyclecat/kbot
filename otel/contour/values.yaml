@@ -168,11 +168,11 @@ contour:
   ##
   resources:
     ## Example:
-    ## limits:
-    ##    cpu: 400m
+    limits:
+      cpu: 150m
     ##    memory: 258Mi
     ##
-    limits: {}
+    # limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 100m
