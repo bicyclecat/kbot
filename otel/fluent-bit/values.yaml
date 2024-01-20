@@ -420,6 +420,7 @@ config:
   upstream: {}
 
   ## https://docs.fluentbit.io/manual/pipeline/parsers
+  customParsers: {}
 #  customParsers: |
 #    [PARSER]
 #        Name docker_no_time
