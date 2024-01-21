@@ -60,7 +60,8 @@ openShift:
 podSecurityContext: {}
 #   fsGroup: 2000
 
-hostNetwork: false
+# CUSTOM false -> true
+hostNetwork: true
 dnsPolicy: ClusterFirst
 
 dnsConfig: {}
