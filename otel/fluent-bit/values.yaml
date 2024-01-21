@@ -185,19 +185,19 @@ lifecycle: {}
 #     exec:
 #       command: ["/bin/sh", "-c", "sleep 20"]
 
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-  timeoutSeconds: 5
-  initialDelaySeconds: 15
+#livenessProbe:
+#  httpGet:
+#    path: /
+#    port: http
+#  timeoutSeconds: 5
+# initialDelaySeconds: 15
 
-readinessProbe:
-  httpGet:
-    path: /api/v1/health
-    port: http
-  timeoutSeconds: 5
-  initialDelaySeconds: 15
+#readinessProbe:
+#  httpGet:
+#    path: /api/v1/health
+#    port: http
+# timeoutSeconds: 5
+#  initialDelaySeconds: 15
 
 resources: {}
 #   limits:
