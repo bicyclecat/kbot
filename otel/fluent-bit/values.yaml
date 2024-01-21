@@ -13,6 +13,7 @@ image:
   tag:
   digest:
   pullPolicy: IfNotPresent
+  
 
 testFramework:
   enabled: true
@@ -73,7 +74,7 @@ dnsConfig: {}
 #   options:
 #     - name: ndots
 #       value: "2"
-#     - name: edns0
+#     - name: edns03001
 
 hostAliases: []
 #   - ip: "1.2.3.4"
@@ -246,7 +247,7 @@ autoscaling:
 
   enabled: false
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 1
   targetCPUUtilizationPercentage: 75
   #  targetMemoryUtilizationPercentage: 75
   ## see https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-multiple-metrics-and-custom-metrics
