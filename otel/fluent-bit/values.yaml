@@ -389,7 +389,7 @@ config:
         Tag               kube.*
         multiline.parser  docker, cri
         Refresh_Interval  10
-        Tag_Regex         (?<kube_pod>[^_]+)_(?<kube_namespace>[^_]+)_(?<kube_container>[^_]+)-(?<kube_hash>[^_]+)\.(?<kube_format>log|log\.gz|txt|json|out)$
+        Tag_Regex         (?<kube_pod>[^_]+)_(?<kube_namespace>[^_]+)_(?<kube_container>[^_]+(?:-[^_]+)*)-(?<kube_hash>[^_]+)\.(?<kube_format>log|log\.gz|txt|json|out)$
         Tag               kube.${kube_namespace}.${kube_pod}.${kube_container}.${kube_hash}.${kube_format}
         Ignore_Older      6h
         Docker_Mode       On
