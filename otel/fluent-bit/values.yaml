@@ -322,7 +322,7 @@ extraContainers: []
 flush: 1
 
 # CUSTOM 2020 -> 3001
-metricsPort: 3001
+metricsPort: 2020
 
 extraPorts: []
 #   - port: 5170
