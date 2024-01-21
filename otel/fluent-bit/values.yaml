@@ -189,11 +189,15 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  timeoutSeconds: 5
+  initialDelaySeconds: 15
 
 readinessProbe:
   httpGet:
     path: /api/v1/health
     port: http
+  timeoutSeconds: 5
+  initialDelaySeconds: 15
 
 resources: {}
 #   limits:
