@@ -316,7 +316,9 @@ webhook:
     # rules or requiring NET_BIND_SERVICE capabilities to bind port numbers <1000.
     # This should be uncommented and set as a default by the chart once we graduate
     # the apiVersion of WebhookConfiguration past v1alpha1.
-    # securePort: 10250
+    
+    # CUSTOM uncommented
+    securePort: 10250
 
   strategy: {}
     # type: RollingUpdate
@@ -468,7 +470,7 @@ webhook:
   # network, `webhook.securePort` should be changed to an available port if
   # running in hostNetwork mode.
   # CUSTOM true
-  hostNetwork: true
+  hostNetwork: false
 
   # Specifies how the service should be handled. Useful if you want to expose the
   # webhook to outside of the cluster. In some cases, the control plane cannot
