@@ -834,13 +834,16 @@ write:
   terminationGracePeriodSeconds: 300
   # -- Affinity for write pods. Passed through `tpl` and, thus, to be configured as string
   # @default -- Hard node and soft zone anti-affinity
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              {{- include "loki.writeSelectorLabels" . | nindent 10 }}
-          topologyKey: kubernetes.io/hostname
+  
+  # CUSTOM podAntiAffinity: {}
+  affinity: {}
+#  affinity: |
+#    podAntiAffinity:
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#        - labelSelector:
+#            matchLabels:
+#              {{- include "loki.writeSelectorLabels" . | nindent 10 }}
+#          topologyKey: kubernetes.io/hostname
   # -- DNS config for write pods
   dnsConfig: {}
   # -- Node selector for write pods
