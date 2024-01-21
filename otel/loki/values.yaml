@@ -560,7 +560,7 @@ rbac:
 test:
   enabled: true
   # -- Address of the prometheus server to query for the test
-  prometheusAddress: "http://{{ .Release.Name }}-prometheus-server:9090"
+  prometheusAddress: "http://prometheus-server:9090"
   # -- Number of times to retry the test before failing
   timeout: 1m
   # -- Additional labels for the test pods
