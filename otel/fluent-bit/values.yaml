@@ -352,15 +352,19 @@ luaScripts: {}
 config:
   service: |
     [SERVICE]
-        Daemon Off
-        Flush {{ .Values.flush }}
-        Log_Level {{ .Values.logLevel }}
-        Parsers_File /fluent-bit/etc/parsers.conf
-        Parsers_File /fluent-bit/etc/conf/custom_parsers.conf
-        HTTP_Server On
-        HTTP_Listen 0.0.0.0
-        HTTP_Port {{ .Values.metricsPort }}
-        Health_Check On
+        Flush         1
+        Log_Level     error
+        
+
+#        Daemon Off
+#        Flush {{ .Values.flush }}
+#        Log_Level {{ .Values.logLevel }}
+#        Parsers_File /fluent-bit/etc/parsers.conf
+#        Parsers_File /fluent-bit/etc/conf/custom_parsers.conf
+#        HTTP_Server On
+#        HTTP_Listen 0.0.0.0
+#        HTTP_Port {{ .Values.metricsPort }}
+#        Health_Check On
 
 #    [INPUT]
 #        Name tail
@@ -379,25 +383,28 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        Name   tail
-        Path   /var/log/containers/demo-kbot-*.log
-        multiline.parser docker, cri
+        Name              tail
+        Path              /var/log/containers/*.log
+        multiline.parser  docker, cri
         Tag kube.*
+        Refresh_Interval  10
         Tag_Regex         (?<kube_namespace>[^_]+)_(?<kube_pod>[^_]+)_(?<kube_container>[^_]+)_(?<kube_id>[^_]+)_(?<kube_name>.*)\.(?<kube_format>log|log\.gz|txt|json|out)$
         Ignore_Older      6h
         Docker_Mode       On
+        Tag               kube.${kube_namespace}.${kube_pod}.${kube_container}.${kube_id}.${kube_name}.${kube_format}
 
         
-
+#        Keep_Log             Off
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
     [FILTER]
         Name                 kubernetes
         Match                kube.*
         Merge_Log            On
-        Keep_Log             Off
-        K8S-Logging.Parser   On
-        K8S-Logging.Exclude  On
+        Merge_Log_Key        log_processed
+
+#        K8S-Logging.Parser   On
+#        K8S-Logging.Exclude  On
 
 
 
@@ -408,6 +415,7 @@ config:
         Name                 opentelemetry
         Host                 otel-collector
         Port                 3030
+        Match                *
         metrics_uri          /v1/metrics
         logs_uri             /v1/logs
         traces_uri           /v1/traces
@@ -497,7 +505,8 @@ initContainers: []
 #     image: bitnami/kubectl:{{ .Capabilities.KubeVersion.Major }}.{{ .Capabilities.KubeVersion.Minor }}
 #     command: ['kubectl', 'version']
 
-logLevel: info
+# CUSTOM info -> error
+logLevel: error
 
 hotReload:
   enabled: false

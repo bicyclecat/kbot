@@ -1629,4 +1629,5 @@ sidecar:
     # Defaults to 66sec.
     watchClientTimeout: 60
     # -- Log level of the sidecar container.
+    # CUSTOM ERROR -> INFO
     logLevel: ERROR
