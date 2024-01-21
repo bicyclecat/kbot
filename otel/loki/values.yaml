@@ -1045,7 +1045,7 @@ read:
 # Configuration for the backend pod(s)
 backend:
   # -- Number of replicas for the backend
-  replicas: 3
+  replicas: 1
   autoscaling:
     # -- Enable autoscaling for the backend.
     enabled: false
@@ -1160,7 +1160,7 @@ singleBinary:
     # -- Minimum autoscaling replicas for the single binary
     minReplicas: 1
     # -- Maximum autoscaling replicas for the single binary
-    maxReplicas: 2
+    maxReplicas: 1
     # -- Target CPU utilisation percentage for the single binary
     targetCPUUtilizationPercentage: 60
     # -- Target memory utilisation percentage for the single binary
