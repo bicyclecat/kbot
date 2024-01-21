@@ -268,8 +268,8 @@ loki:
 # CUSTOM /tmp/loki -> /var/loki
     path_prefix: /var/loki
     replication_factor: 1
-    # compactor_address: '{{ include "loki.compactorAddress" . }}'
-    compactor_address: 'loki'
+    compactor_address: '{{ include "loki.compactorAddress" . }}'
+    #compactor_address: 'loki'
   # -- Storage config. Providing this will automatically populate all necessary storage configs in the templated config.
   storage:
     bucketNames:
@@ -1300,7 +1300,7 @@ gateway:
     # -- Minimum autoscaling replicas for the gateway
     minReplicas: 1
     # -- Maximum autoscaling replicas for the gateway
-    maxReplicas: 3
+    maxReplicas: 1
     # -- Target CPU utilisation percentage for the gateway
     targetCPUUtilizationPercentage: 60
     # -- Target memory utilisation percentage for the gateway
