@@ -394,7 +394,7 @@ config:
         Ignore_Older      6h
         Docker_Mode       On
         
-#        Keep_Log             Off
+#        
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
     [FILTER]
@@ -402,9 +402,9 @@ config:
         Match                kube.*
         Merge_Log            On
         Merge_Log_Key        log_processed
-
-#        K8S-Logging.Parser   On
-#        K8S-Logging.Exclude  On
+        Keep_Log             Off
+        K8S-Logging.Parser   On
+        K8S-Logging.Exclude  On
 
 
 
