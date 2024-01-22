@@ -51,8 +51,8 @@ global:
     # renewal of a leadership.
     # retryPeriod: 15s
 
-# CUSTOM true
-installCRDs: true
+# CUSTOM false
+installCRDs: false
 
 replicaCount: 1
 
@@ -380,10 +380,12 @@ webhook:
   # webhook pod.
   featureGates: ""
 
-  resources: {}
-    # requests:
-    #   cpu: 10m
-    #   memory: 32Mi
+  # CUSTOM uncommented
+  # resources: {}
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
