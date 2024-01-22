@@ -1310,7 +1310,7 @@ memberlist:
 gateway:
   # -- Specifies whether the gateway should be enabled
   # CUSTOM true -> false
-  enabled: true
+  enabled: false
   # -- Number of replicas for the gateway
   replicas: 1
   # -- Enable logging of 2xx and 3xx HTTP requests
