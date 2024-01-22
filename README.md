@@ -8,7 +8,7 @@ This project represents the deployment of a monitoring stack of OTEL, Prometheus
 
 1. Deployment of a GKE cluster and bootstrapping it with FluxCD using Terraform.
 
-2. [Kbot Telegram bot](/demo-flux/kbot.md) deployment.
+2. [Kbot Telegram bot](.media/kbot.md) deployment.
 
 3. Monitoring stack deployment.
 
