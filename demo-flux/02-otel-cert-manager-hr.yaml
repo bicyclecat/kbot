@@ -1,0 +1,15 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: ./otel/cert-manager
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: monitoring-source
+  interval: 2m0s

@@ -1,0 +1,15 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: opentelemetry-operator
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: ./otel/opentelemetry-operator
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: monitoring-source
+  interval: 2m0s

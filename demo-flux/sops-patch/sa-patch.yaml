@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kustomize-controller
+  namespace: flux-system
+  annotations:
+    iam.gke.io/gcp-service-account: kustomize-controller@ed-k8s-k3s-408116.iam.gserviceaccount.com
