@@ -268,8 +268,10 @@ loki:
 # CUSTOM /tmp/loki -> /var/loki
     path_prefix: /var/loki
     replication_factor: 1
-    compactor_address: '{{ include "loki.compactorAddress" . }}'
-    #compactor_address: 'loki'
+
+    # CUSTOM 'loki'
+    compactor_address: 'loki'
+    # compactor_address: '{{ include "loki.compactorAddress" . }}'
   # -- Storage config. Providing this will automatically populate all necessary storage configs in the templated config.
   storage:
     bucketNames:
