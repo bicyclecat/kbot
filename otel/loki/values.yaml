@@ -842,7 +842,15 @@ write:
   # @default -- Hard node and soft zone anti-affinity
   
   # CUSTOM podAntiAffinity: {}
-  affinity: {}
+#  affinity: {}
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              - 
+          topologyKey: kubernetes.io/hostname
+
 #  affinity: |
 #    podAntiAffinity:
 #      requiredDuringSchedulingIgnoredDuringExecution:
@@ -850,6 +858,8 @@ write:
 #            matchLabels:
 #              {{- include "loki.writeSelectorLabels" . | nindent 10 }}
 #          topologyKey: kubernetes.io/hostname
+
+
   # -- DNS config for write pods
   dnsConfig: {}
   # -- Node selector for write pods
@@ -1390,8 +1400,11 @@ gateway:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
-            matchLabels:
-              {{- include "loki.gatewaySelectorLabels" . | nindent 10 }}
+            matchExpressions:
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - gateway
           topologyKey: kubernetes.io/hostname
   # -- DNS config for gateway pods
   dnsConfig: {}
