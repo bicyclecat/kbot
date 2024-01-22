@@ -325,8 +325,9 @@ loki:
       connect_timeout: null
       request_timeout: null
     filesystem:
-      chunks_directory: /tmp/loki/chunks
-      rules_directory: /tmp/loki/rules
+      # CUSTOM tmp -> var
+      chunks_directory: /var/loki/chunks
+      rules_directory: /var/loki/rules
   # -- Configure memcached as an external cache for chunk and results cache. Disabled by default
   # must enable and specify a host for each cache you would like to use.
   memcached:
