@@ -382,9 +382,13 @@ loki:
   index_gateway:
     mode: ring
   frontend:
-    scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
+    # CUSTOM ""
+    scheduler_address: ""
+    # scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
   frontend_worker:
-    scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
+    # CUSTOM 
+    scheduler_address: ""
+    # scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
   # -- Optional distributor configuration
   distributor: {}
   # -- Enable tracing
