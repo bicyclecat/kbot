@@ -1293,6 +1293,7 @@ memberlist:
 # Configuration for the gateway
 gateway:
   # -- Specifies whether the gateway should be enabled
+  # CUSTOM true -> false
   enabled: true
   # -- Number of replicas for the gateway
   replicas: 1
