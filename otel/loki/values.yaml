@@ -1288,7 +1288,8 @@ ingress:
 # Configuration for the memberlist service
 memberlist:
   service:
-    publishNotReadyAddresses: false
+    # CUSTOM false -> true
+    publishNotReadyAddresses: true
 # Configuration for the gateway
 gateway:
   # -- Specifies whether the gateway should be enabled
