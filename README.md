@@ -8,7 +8,7 @@ This project represents the deployment of a monitoring stack of OTEL, Prometheus
 
 1. Deployment of a GKE cluster and bootstrapping it with FluxCD using Terraform.
 
-2. [Kbot Telegram bot](.media/kbot.md) deployment.
+2. Kbot Telegram bot deployment.
 
 3. Monitoring stack deployment.
 
@@ -266,6 +266,9 @@ At this moment, having our Kbot and Monitoring up and running, let's send some c
 and navigate to Grafana web-interface to watch the eported logs and metrics. Just for this particular demo, it is attached to  https://www.somedevops.net/grafana:
 
 ![Grafana webpage](.media/kbot_monitoring_grafana_demo.gif)
+
+After we checked all OK, a dashboard can be created:
+![Grafana Dashboard Creation](.media/grafana_dashboard_creation.png)
 
 ## Conclusion
 
