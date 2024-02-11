@@ -6,6 +6,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -14,20 +15,32 @@ import (
 
 	"github.com/hirosassa/zerodriver"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
-	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/sdk/resource"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
+
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
+
+	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
+
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+
+	"go.opentelemetry.io/otel/trace"
 )
 
 var (
-	// TeleToken bot
+	// TeleToken bot topsecret data
 	TeleToken = os.Getenv("TELE_TOKEN")
 	// MetricsHost exporter host:port
 	MetricsHost = os.Getenv("METRICS_HOST")
+	// TracesHost exporter
+	traceEndpoint = os.Getenv("OTEL_EXPORTER_OTLP_TRACES_ENDPOINT")
+	globalTracer  trace.Tracer
+	logger        = zerodriver.NewProductionLogger()
 )
 
-// Initialize OpenTelemetry
+// Initialize OpenTelemetry Metrics
 func initMetrics(ctx context.Context) {
 
 	// Create a new OTLP Metric gRPC exporter with the specified endpoint and options
@@ -58,7 +71,39 @@ func initMetrics(ctx context.Context) {
 
 }
 
+// Initialize OpenTelemetry Tracing
+func initTracing(ctx context.Context) {
+
+	traceExporter, err := otlptracegrpc.New(
+		ctx,
+		otlptracegrpc.WithEndpoint(traceEndpoint),
+		otlptracegrpc.WithInsecure(),
+	)
+
+	if err != nil {
+		log.Fatalf("failed to initialize traceExporter: %v", err)
+	}
+
+	// Create a new tracer provider with a batch span processor and the given exporter.
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(traceExporter),
+		sdktrace.WithResource(
+			resource.NewWithAttributes(
+				semconv.SchemaURL,
+				semconv.ServiceName("kbot-trace"),
+			),
+		),
+	)
+
+	otel.SetTracerProvider(tp)
+
+	// Finally, set the tracer that can be used for this package.
+	globalTracer = tp.Tracer("kbot-trace")
+
+}
+
 func pmetrics(ctx context.Context, payload string) {
+
 	// Get the global MeterProvider and create a new Meter with the name "kbot_light_signal_counter"
 	meter := otel.GetMeterProvider().Meter("kbot_light_signal_counter")
 
@@ -81,7 +126,6 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		logger := zerodriver.NewProductionLogger()
 
 		kbot, err := telebot.NewBot(telebot.Settings{
 			URL:    "",
@@ -108,10 +152,18 @@ to quickly create a Cobra application.`,
 		trafficSignal["green"]["pin"] = 22
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
+
+			ctx := context.Background()
+
 			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
 
 			payload := m.Message().Payload
-			pmetrics(context.Background(), payload)
+
+			_, span := globalTracer.Start(cmd.Context(), "Telebot user request processing", trace.WithSpanKind(trace.SpanKindClient))
+			span.SetAttributes(attribute.String("Telebot message: ", payload))
+			defer span.End()
+
+			pmetrics(ctx, payload)
 
 			switch payload {
 			case "hello":
@@ -147,19 +199,24 @@ to quickly create a Cobra application.`,
 
 func init() {
 	ctx := context.Background()
+
 	initMetrics(ctx)
+
+	initTracing(ctx)
+
+	ctx, span := globalTracer.Start(ctx, "Kbot Init")
+	defer span.End()
+	// Transfer context and parent span to kbotCmd
+	kbotCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
+		// Создание дочернего спана для kbotCmd
+		_, span := globalTracer.Start(ctx, "kbotCmd", trace.WithSpanKind(trace.SpanKindClient))
+		ctx := trace.ContextWithSpan(context.Background(), span)
+		cmd.SetContext(ctx)
+	}
+
+	//initMetrics()
+	// span_create(ctx, "Init: Child")
+
 	rootCmd.AddCommand(kbotCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// kbotCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// kbotCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
-	// Initialize OpenTelemetry tracer
 
 }

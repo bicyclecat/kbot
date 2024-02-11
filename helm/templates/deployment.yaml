@@ -51,3 +51,5 @@ spec:
                 name: {{ .Values.secret.name }}
           - name: METRICS_HOST
             value: {{ .Values.env.metricsHost | quote }}
+          - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+            value: {{ .Values.env.traceHost | quote }}
