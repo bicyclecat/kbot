@@ -265,7 +265,7 @@ loki:
   runtimeConfig: {}
   # -- Check https://grafana.com/docs/loki/latest/configuration/#common_config for more info on how to provide a common configuration
   commonConfig:
-# CUSTOM /tmp/loki -> /var/loki
+  # CUSTOM /tmp/loki -> /var/loki
     path_prefix: /var/loki
     replication_factor: 1
 
@@ -362,6 +362,7 @@ loki:
   # -- Structured loki configuration, takes precedence over `loki.config`, `loki.schemaConfig`, `loki.storageConfig`
   structuredConfig: {}
   # -- Additional query scheduler config
+  # CUSTOM undone
   query_scheduler: {}
   # -- Additional storage config
   storage_config:
@@ -376,20 +377,24 @@ loki:
   analytics:
     reporting_enabled: false
   # --  Optional querier configuration
-  querier: {}
+  # CUSTOM
+  # querier: {}
+  querier:
+    max_concurrent: 2048
   # --  Optional ingester configuration
   ingester: {}
   # --  Optional index gateway configuration
   index_gateway:
     mode: ring
   frontend:
-    # CUSTOM ""
-    scheduler_address: ""
-    # scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
+    # CUSTOM "" undone
+    # scheduler_address: ""
+    scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
+    max_outstanding_per_tenant: 1024
   frontend_worker:
-    # CUSTOM 
-    scheduler_address: ""
-    # scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
+    # CUSTOM "" undone
+    #scheduler_address: ""
+    scheduler_address: '{{ include "loki.querySchedulerAddress" . }}'
   # -- Optional distributor configuration
   distributor: {}
   # -- Enable tracing
@@ -735,7 +740,10 @@ monitoring:
     # -- DNS config for canary pods
     dnsConfig: {}
     # -- Node selector for canary pods
-    nodeSelector: {}
+    # CUSTOM: linux
+    # nodeSelector: {}
+    nodeSelector:
+      kubernetes.io/os: linux
     # -- Tolerations for canary pods
     tolerations: []
     # -- The name of the PriorityClass for loki-canary pods
@@ -842,29 +850,22 @@ write:
   # -- Affinity for write pods. Passed through `tpl` and, thus, to be configured as string
   # @default -- Hard node and soft zone anti-affinity
   
-  # CUSTOM podAntiAffinity: {}
-#  affinity: {}
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchLabels:
-              - 
+              {{- include "loki.writeSelectorLabels" . | nindent 10 }}
           topologyKey: kubernetes.io/hostname
-
-#  affinity: |
-#    podAntiAffinity:
-#      requiredDuringSchedulingIgnoredDuringExecution:
-#        - labelSelector:
-#            matchLabels:
-#              {{- include "loki.writeSelectorLabels" . | nindent 10 }}
-#          topologyKey: kubernetes.io/hostname
 
 
   # -- DNS config for write pods
   dnsConfig: {}
   # -- Node selector for write pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Topology Spread Constraints for write pods
   topologySpreadConstraints: []
   # -- Tolerations for write pods
@@ -880,7 +881,7 @@ write:
     # -- Enable StatefulSetAutoDeletePVC feature
     enableStatefulSetAutoDeletePVC: false
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
@@ -950,7 +951,10 @@ tableManager:
   # -- DNS config table-manager pods
   dnsConfig: {}
   # -- Node selector for table-manager pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Tolerations for table-manager pods
   tolerations: []
   # -- Enable deletes by retention
@@ -1042,7 +1046,10 @@ read:
   # -- DNS config for read pods
   dnsConfig: {}
   # -- Node selector for read pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Topology Spread Constraints for read pods
   topologySpreadConstraints: []
   # -- Tolerations for read pods
@@ -1053,7 +1060,7 @@ read:
     # -- Enable StatefulSetAutoDeletePVC feature
     enableStatefulSetAutoDeletePVC: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
@@ -1145,7 +1152,10 @@ backend:
   # -- DNS config for backend pods
   dnsConfig: {}
   # -- Node selector for backend pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Topology Spread Constraints for backend pods
   topologySpreadConstraints: []
   # -- Tolerations for backend pods
@@ -1161,7 +1171,7 @@ backend:
     # -- Enable StatefulSetAutoDeletePVC feature
     enableStatefulSetAutoDeletePVC: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
@@ -1239,7 +1249,10 @@ singleBinary:
   # -- DNS config for single binary pods
   dnsConfig: {}
   # -- Node selector for single binary pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Tolerations for single binary pods
   tolerations: []
   persistence:
@@ -1248,7 +1261,7 @@ singleBinary:
     # -- Enable persistent disk
     enabled: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
@@ -1410,7 +1423,10 @@ gateway:
   # -- DNS config for gateway pods
   dnsConfig: {}
   # -- Node selector for gateway pods
-  nodeSelector: {}
+  # CUSTOM: linux
+  # nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/os: linux
   # -- Topology Spread Constraints for gateway pods
   topologySpreadConstraints: []
   # -- Tolerations for gateway pods
