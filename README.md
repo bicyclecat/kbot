@@ -114,7 +114,7 @@ cd ../demo-flux/flux-repo
 
 Sync remote Flux infrastructure into local directory (enter your actual values where needed):
 ```bash
-mkdir flux-repo && cd flux-repo \
+mkdir -p flux-repo && cd flux-repo \
 && git init \
 && git branch -M main \
 && git remote add origin https://<GITHUB_LOGIN>:<GITUIB_ACCESS_TOKEN>@github.com/<GITHUB_LOGIN>/kbot-otel-gitops.git \
