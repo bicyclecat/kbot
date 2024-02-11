@@ -107,15 +107,14 @@ gcloud container clusters get-credentials flux-cluster --zone us-central1-a
 
 - Sync the FluxCD infrastructure repo (in this particular demo, it's "kbot-otel-gitops") to a local "flux-repo" directory:
 
-Change to the "flux-repo" directory:
+Change to the empty "flux-repo" directory:
 ```bash
 cd ../demo-flux/flux-repo
 ```
 
 Sync remote Flux infrastructure into local directory (enter your actual values where needed):
 ```bash
-mkdir -p flux-repo && cd flux-repo \
-&& git init \
+git init \
 && git branch -M main \
 && git remote add origin https://<GITHUB_LOGIN>:<GITUIB_ACCESS_TOKEN>@github.com/<GITHUB_LOGIN>/kbot-otel-gitops.git \
 && git pull origin main
