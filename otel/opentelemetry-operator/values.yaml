@@ -32,7 +32,7 @@ manager:
     tag: ""
   collectorImage:
     repository: otel/opentelemetry-collector-contrib
-    tag: 0.78.0
+    tag: 0.92.0
   opampBridgeImage:
     repository: ""
     tag: ""
@@ -182,12 +182,11 @@ kubeRBACProxy:
 
 ## Admission webhooks make sure only requests with correctly formatted rules will get into the Operator.
 ## They also enable the sidecar injection for OpenTelemetryCollector and Instrumentation CR's
-
-
 admissionWebhooks:
   create: true
   servicePort: 443
-  failurePolicy: Fail
+  # CUSTOM Fail -> Ignore
+  failurePolicy: Ignore
   secretName: ""
 
   ## Defines the sidecar injection logic in Pods.
@@ -207,13 +206,11 @@ admissionWebhooks:
   namespaceSelector: {}
   objectSelector: {}
 
-
-
   ## https://github.com/open-telemetry/opentelemetry-helm-charts/blob/main/charts/opentelemetry-operator/README.md#tls-certificate-requirement
   ## TLS Certificate Option 1: Use certManager to generate self-signed certificate.
   ## certManager must be enabled. If enabled, always takes precendence over options 2 and 3.
   certManager:
-  
+    # CUSTOM true -> false
     enabled: true
     ## Provide the issuer kind and name to do the cert auth job.
     ## By default, OpenTelemetry Operator will use self-signer issuer.
@@ -228,8 +225,7 @@ admissionWebhooks:
   ## certManager must be disabled and autoGenerateCert must be enabled.
   ## If true and certManager.enabled is false, Helm will automatically create a self-signd cert and secret for you.
   autoGenerateCert:
-    # CUSTOM false
-    enabled: false
+    enabled: true
     # If set to true, new webhook key/certificate is generated on helm upgrade.
     recreate: true
 
@@ -262,7 +258,7 @@ tolerations: []
 nodeSelector: {}
 topologySpreadConstraints: []
 
-# CUSTOM false -> true
+# CUSTOM: false -> true
 hostNetwork: true
 
 # Allows for pod scheduler prioritisation
