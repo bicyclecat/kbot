@@ -107,9 +107,9 @@ gcloud container clusters get-credentials flux-cluster --zone us-central1-a
 
 - Sync the FluxCD infrastructure repo (in this particular demo, it's "kbot-otel-gitops") to a local "flux-repo" directory:
 
-Change to the empty "flux-repo" directory:
+Create empty "flux-repo" directory and change into it:
 ```bash
-cd ../demo-flux/flux-repo
+cd .. && mkdir -p ./demo-flux/flux-repo && cd demo-flux/flux-repo
 ```
 
 Sync remote Flux infrastructure into local directory (enter your actual values where needed):
