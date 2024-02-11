@@ -192,19 +192,10 @@ git commit -m "add Cert-Manager" && \
 git push origin main
 ```
 
-- Opentelemetry Operator:
-
-```bash
-cp ../03-*.yaml clusters/ && \
-git add . && \
-git commit -m "add Otel-Operator" && \
-git push origin main
-```
-
 - Fluent-Bit:
 
 ```bash
-cp ../04-*.yaml clusters/ && \
+cp ../03-*.yaml clusters/ && \
 git add . && \
 git commit -m "add Fluent-Bit" && \
 git push origin main
@@ -213,7 +204,7 @@ git push origin main
 - Prometheus:
 
 ```bash
-cp ../05-*.yaml clusters/ && \
+cp ../04-*.yaml clusters/ && \
 git add . && \
 git commit -m "add Prometheus" && \
 git push origin main
@@ -222,16 +213,34 @@ git push origin main
 - Loki:
 
 ```bash
-cp ../06-*.yaml clusters/ && \
+cp ../05-*.yaml clusters/ && \
 git add . && \
 git commit -m "add Loki" && \
+git push origin main
+```
+
+- Tempo:
+
+```bash
+cp ../06-*.yaml clusters/ && \
+git add . && \
+git commit -m "add Tempo" && \
+git push origin main
+```
+
+- Opentelemetry Operator:
+
+```bash
+cp ../07-*.yaml clusters/ && \
+git add . && \
+git commit -m "add Otel-Operator" && \
 git push origin main
 ```
 
 - Grafana
 
 ```bash
-cp ../07-*.yaml clusters/ && \
+cp ../08-*.yaml clusters/ && \
 git add . && \
 git commit -m "add Grafana" && \
 git push origin main
@@ -240,7 +249,7 @@ git push origin main
 - Contour:*
 
 ```bash
-cp ../08-*.yaml clusters/ && \
+cp ../09-*.yaml clusters/ && \
 git add . && \
 git commit -m "add Contour" && \
 git push origin main
