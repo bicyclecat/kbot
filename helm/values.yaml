@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   registry: "docker.io"
   repository: "bicyclecat"
-  tag: "v1.0.7-a1c1844"
+  tag: "v1.0.8-57744bb"
   os: linux
   arch: amd64
 secret:
@@ -18,4 +18,4 @@ securityContext:
   privileged: true
 env:
   metricsHost: "otel-collector.monitoring.svc:4317"
-  traceHost: "tempo.monitoring.svc:4317"  
+  traceHost: "tempo.monitoring.svc:4317"
