@@ -12,7 +12,7 @@ This project represents the deployment of a monitoring stack of OTEL, Prometheus
 
 3. Monitoring stack deployment.
 
-4. Viewing logs and metrics in Grafana
+4. Viewing logs, metrics and traces in Grafana
 
 ## Getting started
 
@@ -272,7 +272,7 @@ At this moment, having our Kbot and Monitoring up and running, let's send some c
 
 ![Sent Kbot some commands](.media/kbot_commands_sent.png)
 
-and navigate to Grafana web-interface to watch the eported logs and metrics. Just for this particular demo, it is attached to  https://www.somedevops.net/grafana:
+and navigate to Grafana web-interface to watch the reported logs and metrics. Just for this particular demo, it is attached to  https://www.somedevops.net/grafana:
 
 ![Grafana webpage](.media/kbot_monitoring_grafana_demo.gif)
 
