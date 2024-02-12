@@ -647,8 +647,6 @@ datasources:
       editable: false
       apiVersion: 1
 
-
-
 ## Configure grafana alerting (can be templated)
 ## ref: http://docs.grafana.org/administration/provisioning/#alerting
 ##
@@ -816,10 +814,10 @@ grafana.ini:
   grafana_net:
     url: https://grafana.net
   server:
-    # root_url: https://www.somedevops.net/grafana/
+    root_url: https://www.somedevops.net/grafana/
     # domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ .Values.ingress.hosts | first }}{{ else }}''{{ end }}"
-    domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ .Values.ingress.hosts | first }}{{ else }}''{{ end }}"
-    # serve_from_sub_path: true
+    domain: https://www.somedevops.net
+    serve_from_sub_path: true
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
       # The full public facing url you use in browser, used for redirects and emails
