@@ -39,27 +39,6 @@ module "tls_private_key" {
   algorithm = "RSA"
 }
 
-module "gke-workload-identity" {
-  source              = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
-  use_existing_k8s_sa = true
-  name                = "kustomize-controller"
-  namespace           = module.flux_bootstrap.flux_bootstrap_data.flux_system_namespace
-  project_id          = var.GOOGLE_PROJECT
-  cluster_name        = module.google_gke_cluster.cluster_data.cluster_name
-  location            = var.GOOGLE_REGION
-  annotate_k8s_sa     = true
-  roles               = ["roles/cloudkms.cryptoKeyEncrypterDecrypter"]
-}
-
-module "kms" {
-  source              = "github.com/terraform-google-modules/terraform-google-kms"
-  project_id          = var.GOOGLE_PROJECT
-  keyring             = "sops-flux"
-  location            = "global"
-  keys                = ["sops-key-flux"]
-  prevent_destroy     = false
-}
-
 
 output "kubepath" {
   value = module.google_gke_cluster.cluster_data.kubeconfig
