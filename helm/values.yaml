@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   registry: "docker.io"
   repository: "bicyclecat"
-  tag: "v1.0.8-57744bb"
+  tag: "v1.0.8-d270e40"
   os: linux
   arch: amd64
 secret:
