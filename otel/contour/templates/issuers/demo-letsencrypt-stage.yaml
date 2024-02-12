@@ -5,7 +5,7 @@ metadata:
   namespace: demo
 spec:
   acme:
-    email: themail@server.com
+    email: edelweissman@yahoo.com
     privateKeySecretRef:
       name: kbot-letsencrypt-stage
     server: https://acme-staging-v02.api.letsencrypt.org/directory
