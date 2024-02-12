@@ -209,7 +209,7 @@ git commit -m "add Prometheus" && \
 git push origin main
 ```
 
-- Loki:
+- Grafana Loki:
 
 ```bash
 cp ../05-*.yaml clusters/ && \
@@ -218,7 +218,7 @@ git commit -m "add Loki" && \
 git push origin main
 ```
 
-- Tempo:
+- Grafana Tempo (if we want to observe traces):
 
 ```bash
 cp ../06-*.yaml clusters/ && \
@@ -245,7 +245,7 @@ git commit -m "add Grafana" && \
 git push origin main
 ```
 
-- Contour:*
+- Contour ingress controller:*
 
 ```bash
 cp ../09-*.yaml clusters/ && \
@@ -277,6 +277,9 @@ and navigate to Grafana web-interface to watch the reported logs and metrics. Ju
 
 After we checked all OK, a dashboard can be created:
 ![Grafana Dashboard Creation](.media/grafana_dashboard_creation.png)
+
+In case traces are also subject of our interest and we added the Grafana Tempo to the monitoring stack, the traces can be observed:
+![Grafana Tempo traces](.media/grafana_tempo_traces.gif)
 
 ## Conclusion
 
