@@ -208,14 +208,11 @@ func init() {
 	defer span.End()
 	// Transfer context and parent span to kbotCmd
 	kbotCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-		// Создание дочернего спана для kbotCmd
+		// Create child span for kbotCmd
 		_, span := globalTracer.Start(ctx, "kbotCmd", trace.WithSpanKind(trace.SpanKindClient))
 		ctx := trace.ContextWithSpan(context.Background(), span)
 		cmd.SetContext(ctx)
 	}
-
-	//initMetrics()
-	// span_create(ctx, "Init: Child")
 
 	rootCmd.AddCommand(kbotCmd)
 
