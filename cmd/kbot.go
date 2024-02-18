@@ -88,7 +88,7 @@ func initTracing(ctx context.Context) {
 		sdktrace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceName("kbot-trace"),
+				semconv.ServiceName("kbot"),
 			),
 		),
 	)
@@ -96,7 +96,7 @@ func initTracing(ctx context.Context) {
 	otel.SetTracerProvider(tp)
 
 	// Finally, set the tracer that can be used for this package.
-	globalTracer = tp.Tracer("kbot-trace")
+	globalTracer = tp.Tracer("kbot")
 
 }
 
