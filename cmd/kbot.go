@@ -15,7 +15,6 @@ import (
 
 	"github.com/hirosassa/zerodriver"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/sdk/resource"
 	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
 
@@ -127,6 +126,10 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
+		ctx := context.Background()
+
+		initTracing(ctx)
+
 		kbot, err := telebot.NewBot(telebot.Settings{
 			URL:    "",
 			Token:  TeleToken,
@@ -153,18 +156,24 @@ to quickly create a Cobra application.`,
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
 
-			ctx := context.Background()
-
-			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
-
-			payload := m.Message().Payload
-
-			_, span := globalTracer.Start(cmd.Context(), "Telebot user request processing", trace.WithSpanKind(trace.SpanKindClient))
-			span.SetAttributes(attribute.String("Telebot message: ", payload))
+			// Create Root span
+			ctx, span := globalTracer.Start(cmd.Context(), "kbot.Handle")
 			defer span.End()
 
-			pmetrics(ctx, payload)
+			// Create child span
+			_, span = globalTracer.Start(ctx, "Obtain telebot message Payload")
+			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
+			payload := m.Message().Payload
+			span.End()
 
+			// Create child span
+			_, span = globalTracer.Start(ctx, "Count light signals")
+			pmetrics(ctx, payload)
+			span.End()
+
+			// Create child span
+			_, span = globalTracer.Start(ctx, "Process telebot message Payload")
+			defer span.End()
 			switch payload {
 			case "hello":
 				err = m.Send(fmt.Sprintf("Hello I'm Kbot %s!", appVersion))
@@ -175,18 +184,15 @@ to quickly create a Cobra application.`,
 				err = m.Send(fmt.Sprintf("Current time and date: %s", currentTime))
 
 			case "red", "amber", "green":
-
 				if trafficSignal[payload]["on"] == 0 {
 					trafficSignal[payload]["on"] = 1
 				} else {
 					trafficSignal[payload]["on"] = 0
 				}
-
 				err = m.Send(fmt.Sprintf("Switch %s light signal to %d", payload, trafficSignal[payload]["on"]))
 
 			default:
 				err = m.Send("Usage: /s red|amber|green")
-
 			}
 
 			return err
@@ -201,18 +207,6 @@ func init() {
 	ctx := context.Background()
 
 	initMetrics(ctx)
-
-	initTracing(ctx)
-
-	ctx, span := globalTracer.Start(ctx, "Kbot Init")
-	defer span.End()
-	// Transfer context and parent span to kbotCmd
-	kbotCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-		// Create child span for kbotCmd
-		_, span := globalTracer.Start(ctx, "kbotCmd", trace.WithSpanKind(trace.SpanKindClient))
-		ctx := trace.ContextWithSpan(context.Background(), span)
-		cmd.SetContext(ctx)
-	}
 
 	rootCmd.AddCommand(kbotCmd)
 
