@@ -59,7 +59,7 @@ func initMetrics(ctx context.Context) {
 	mp := sdkmetric.NewMeterProvider(
 		sdkmetric.WithResource(resource),
 		sdkmetric.WithReader(
-			// collects and exports metric data every 10 seconds.
+			// collects and exports metric data every 10 seconds
 			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(10*time.Second)),
 		),
 	)
