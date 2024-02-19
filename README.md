@@ -36,7 +36,7 @@ mkdir monitoring && cd monitoring
 - Clone the repository into current directory:
 
 ```bash
-git clone --depth 1 -b otel https://github.com/bicyclecat/kbot.git .
+git clone --depth 1 -b otel https://github.com/bicyclecat/kbot.git . && rm -rf .git
 ```
 
 - Change to tf directory:
