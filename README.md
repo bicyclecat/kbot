@@ -8,9 +8,9 @@ This project represents the deployment of a monitoring stack of OTEL, Prometheus
 
 1. Deployment of a GKE cluster and bootstrapping it with FluxCD using Terraform.
 
-2. Kbot Telegram bot deployment.
+2. Monitoring stack deployment.
 
-3. Monitoring stack deployment.
+3. Kbot Telegram bot deployment.
 
 4. Viewing logs, metrics and traces in Grafana
 
@@ -129,47 +129,7 @@ git commit -m "add kbot" && \
 git push -u origin main
 ```
 
-### 2. Deploy the Kbot Telegram bot
-
-In order to deploy the Kbot, we are gonna copy it's Namespace, Git Repository Helm Release manifests into local "flux-repo" directory
-```bash
-cp -r ../kbot clusters/
-```
-and push them into Flux Github repository:
-```bash
-git add . && \
-git commit -m "add kbot" && \
-git push origin main
-```
-
-This particular demo is suited for pre-created GCP encrypted Secret with "TELE_TOKEN" value, so the provided encrypted secret is decrypted by Flux on-the-fly due to previously made SOPS-patch, but it is possible to add the TELE_TOKEN secret for Kbot in more traditional way like in example below (random value Base64-encoded token made up for demonstration):
-
-```bash
-cat <<EOF > kbot-token-secret.yaml
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: kbot
-  namespace: demo
-type: Opaque
-data:
-  token: "NjkjOTUw7TE5NFpBIUZJbjhVZjfBdmpZZjFGTU17ckMtREhXKltUb5J8TnlXBn=="
-EOF
-```
-
-```bash
-rm clusters/kbot/kbot-secret-sops.yaml && \
-mv kbot-token-secret.yaml clusters/kbot/
-```
-
-Now, you can check the status of Kbot Helm-release:
-
-```bash
-flux get all -A
-```
-
-### 3. Deploy the Monitoring stack
+### 2. Deploy the Monitoring stack
 
 In the previously described way we add one by one the components of our Monitoring stack:
 
@@ -218,7 +178,7 @@ git commit -m "add Loki" && \
 git push origin main
 ```
 
-- Grafana Tempo (if we want to observe traces):
+- Grafana Tempo:
 
 ```bash
 cp ../06-*.yaml clusters/ && \
@@ -264,6 +224,46 @@ flux get all -A
 
 If everything is more like OK, then the output may look like this:
 ![All_Monitoring_Deployed](.media/flux_get_all_monitoring_stack.png)
+
+### 3. Deploy the Kbot Telegram bot
+
+In order to deploy the Kbot, we are gonna copy it's Namespace, Git Repository Helm Release manifests into local "flux-repo" directory
+```bash
+cp -r ../kbot clusters/
+```
+and push them into Flux Github repository:
+```bash
+git add . && \
+git commit -m "add kbot" && \
+git push origin main
+```
+
+This particular demo is suited for pre-created GCP encrypted Secret with "TELE_TOKEN" value, so the provided encrypted secret is decrypted by Flux on-the-fly due to previously made SOPS-patch, but it is possible to add the TELE_TOKEN secret for Kbot in more traditional way like in example below (random value Base64-encoded token made up for demonstration):
+
+```bash
+cat <<EOF > kbot-token-secret.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kbot
+  namespace: demo
+type: Opaque
+data:
+  token: "NjkjOTUw7TE5NFpBIUZJbjhVZjfBdmpZZjFGTU17ckMtREhXKltUb5J8TnlXBn=="
+EOF
+```
+
+```bash
+rm clusters/kbot/kbot-secret-sops.yaml && \
+mv kbot-token-secret.yaml clusters/kbot/
+```
+
+Now, you can check the status of Kbot Helm-release:
+
+```bash
+flux get all -A
+```
 
 ### 4. Grafana
 
