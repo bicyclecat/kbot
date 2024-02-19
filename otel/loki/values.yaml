@@ -879,7 +879,8 @@ write:
     dataVolumeParameters:
       emptyDir: {}
     # -- Enable StatefulSetAutoDeletePVC feature
-    enableStatefulSetAutoDeletePVC: false
+    # CUSTOM false -> true
+    enableStatefulSetAutoDeletePVC: true
     # -- Size of persistent disk
     size: 512Mi
     # -- Storage class to be used.
