@@ -227,14 +227,26 @@ If everything is more like OK, then the output may look like this:
 
 ### 3. Deploy the Kbot Telegram bot
 
-In order to deploy the Kbot, we are gonna copy it's Namespace, Git Repository Helm Release manifests into local "flux-repo" directory
+In order to deploy the Kbot, first we are gonna copy and sync to flux-repo it's Namespace manifest:
 ```bash
-cp -r ../kbot clusters/
+cp -r ../kbot/01-*.yaml clusters/
 ```
 and push them into Flux Github repository:
 ```bash
 git add . && \
-git commit -m "add kbot" && \
+git commit -m "add kbot NS" && \
+git push origin main
+```
+
+and then its source Git Repository, Helm Release and encrypted teletoken manifests:
+
+```bash
+cp -r ../kbot/02-*.yaml clusters/
+```
+and push them into Flux Github repository:
+```bash
+git add . && \
+git commit -m "add kbot GR HR Token" && \
 git push origin main
 ```
 
