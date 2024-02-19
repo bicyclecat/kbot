@@ -1259,7 +1259,8 @@ singleBinary:
     # -- Enable StatefulSetAutoDeletePVC feature
     enableStatefulSetAutoDeletePVC: true
     # -- Enable persistent disk
-    enabled: true
+    # CUSTOM true -> false
+    enabled: false
     # -- Size of persistent disk
     size: 1Gi
     # -- Storage class to be used.
